@@ -7,17 +7,19 @@
 # Pull base image.
 FROM dockerfile/ubuntu
 
+COPY wordpress /srv
+
 # Install Nginx.
 RUN \
   add-apt-repository -y ppa:nginx/stable && \
   apt-get update && \
-  apt-get install -y nginx php5-fpm && \
+  apt-get install -y nginx && \
   rm -rf /var/lib/apt/lists/* && \
   echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-  chown -R www-data:www-data /var/lib/nginx
+  chown -R www-data:www-data /srv
 
 # Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx"]
+VOLUME ["/etc/nginx/conf.d", "/var/log/nginx"]
 
 # Define working directory.
 WORKDIR /etc/nginx
