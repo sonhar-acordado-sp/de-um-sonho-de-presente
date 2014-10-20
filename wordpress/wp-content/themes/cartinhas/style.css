@@ -14,6 +14,9 @@
 /* =Theme customization starts here
 -------------------------------------------------------------- */
 
+body {
+    background-color: #0098d4;
+}
 
 .home .carousel {
     max-width: 750px;
