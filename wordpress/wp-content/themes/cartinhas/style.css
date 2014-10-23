@@ -16,11 +16,82 @@
 
 body {
     background-color: #0098d4;
+    margin: 0px;
+    padding: 0px;
 }
 
-.home .carousel {
-    max-width: 750px;
-    margin: 0 auto;
+header[role=banner],
+div.container {
+    max-width: 970px;
+    margin: 0px auto;
+}
+
+header .navbar-default {
+    background-color: transparent;
+    border: none;
+}
+
+header .container .logo {
+    margin-left: 10px;
+}
+
+.navbar-default .navbar-nav .caret {
+    display: none;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-nav > li:before {
+    color: white;
+    content: '|';
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 13px;
+}
+
+.navbar-default .navbar-nav > li:first-child:before {
+    content: '';
+}
+
+header .navbar-collapse {
+    margin-top: 20px;
+}
+
+body > .container {
+    margin-top: -60px;
+    background-color: white;
+}
+
+.home > .container {
+    background-color: transparent;
+}
+
+.home > .container #content {
+    background: transparent url(imgs/castelo.png) no-repeat 0 0;
+    background-size: 100% auto;
+    min-height: 415px;
+}
+
+.home > .container #content .placa-da-festa {
+    margin-top: 370px;
+    margin-left: 170px;
+}
+
+.home #content .carousel {
+    width: 415px;
+    height: 250px;
+    margin-top: 45px;
+    margin-right: 45px;
+    float: right;
+}
+
+.home #content .placas {
+    margin-top: 50px;
 }
 
 .home .post_content {
