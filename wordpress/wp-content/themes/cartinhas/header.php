@@ -47,8 +47,10 @@
                         </button>
                     </div>
 
-                    <img class="logo" alt="Logotipo da ONG Sonhar Acordado"
-                         src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/logo_sonhar.png" />
+                    <a title="<?php echo get_bloginfo('description'); ?>" href="<?php echo home_url(); ?>">
+                        <img class="logo" alt="Logotipo da ONG Sonhar Acordado"
+                             src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/logo_sonhar.png" />
+                    </a>
 
                     <div class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                         <?php wp_bootstrap_main_nav(); // Adjust using Menus in Wordpress Admin ?>

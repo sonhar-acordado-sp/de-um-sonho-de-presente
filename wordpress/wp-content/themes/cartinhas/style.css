@@ -106,3 +106,29 @@ body > .container {
 #main article {
     border-bottom-color: transparent;
 }
+
+.page #main{
+    margin: 1.5em;
+}
+
+.page-header .page-title,
+.page .post_content > * {
+    line-height: 1.5em;
+    font-family: 'Lato', sans-serif;
+}
+
+.page .post_content > * {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.page-header .page-title,
+.page .post_content h2,
+.page .post_content h3,
+.page .post_content h3 {
+    font-weight: 400;
+}
+
+.page .post_content h2 {
+    font-size: 28px;
+}
