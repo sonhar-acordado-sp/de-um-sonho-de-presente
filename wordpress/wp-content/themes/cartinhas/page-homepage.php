@@ -19,10 +19,10 @@ Template Name: Homepage
 
                 <div class="col-sm-12 placas clearfix">
                     <div class="col-sm-6 text-center pull-left">
-                        <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-facebook.png" /></a>
+                        <a target="_blank" href="https://www.facebook.com/ONGSonharAcordadoSP"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-facebook.png" /></a>
                     </div>
                     <div class="col-sm-6 text-center pull-right">
-                        <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-site-oficial.png" /></a>
+                        <a target="_blank" href="http://sonharacordado.org.br/saopaulo/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-site-oficial.png" /></a>
                     </div>
                 </div>
 
