@@ -58,6 +58,10 @@ header .container .logo {
     content: '';
 }
 
+.navbar-default .navbar-nav > .active a {
+    background-color: white;
+}
+
 header .navbar-collapse {
     margin-top: 20px;
 }
