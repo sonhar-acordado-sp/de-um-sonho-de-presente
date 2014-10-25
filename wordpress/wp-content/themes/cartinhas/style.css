@@ -88,10 +88,16 @@ body > .container {
 
 .home #content .carousel {
     width: 415px;
-    height: 250px;
+    height: 280px;
     margin-top: 45px;
     margin-right: 45px;
     float: right;
+    overflow: hidden;
+}
+
+.home #content .carousel .item img{
+    max-width: 405px;
+    max-height: 270px;
 }
 
 .home #content .placas {
