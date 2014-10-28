@@ -25,6 +25,7 @@ do
     separator=","
 done
 
+# -- INSERE CARTINHAS
 #
 # INSERT INTO `wp_posts` (`post_author`, `post_date`, `post_date_gmt`,
 #                         `post_content`, `post_title`, `post_excerpt`, `post_status`,
@@ -37,5 +38,14 @@ done
 #         'publish', 'closed', 'closed', '', p.post_name, '', '', '2014-10-26 15:44:07',
 #         '2014-10-26 18:44:07', '', 0, '',  0, 'cartinha', '', 0 FROM `wp_posts` p
 #         WHERE post_date='2014-10-26 23:59:59' and post_type='attachment'
+
+
+# -- FAZ VINCULOS ENTRE MEDIA E CARTINHA
+#
+# UPDATE wp_posts a JOIN wp_posts c ON c.post_title = a.post_title
+# SET a.post_parent=c.ID WHERE c.post_type='cartinha' AND a.post_type='attachment';
+
+
+
 
 echo $sql

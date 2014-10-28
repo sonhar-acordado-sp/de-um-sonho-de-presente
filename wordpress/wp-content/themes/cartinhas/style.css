@@ -113,6 +113,7 @@ body > .container {
     border-bottom-color: transparent;
 }
 
+.archive #main,
 .page #main{
     margin: 1.5em;
 }
@@ -137,4 +138,8 @@ body > .container {
 
 .page .post_content h2 {
     font-size: 28px;
+}
+
+.post-type-archive-cartinha #content img {
+    max-width: 100%;
 }
