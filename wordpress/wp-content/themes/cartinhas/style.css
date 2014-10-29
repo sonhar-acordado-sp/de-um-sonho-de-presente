@@ -145,6 +145,10 @@ body > .container {
     margin: 1em 0;
 }
 
+.post-type-archive-cartinha #content .carousel-inner {
+    background-color: #AEA9AD;
+}
+
 .post-type-archive-cartinha #content img {
-    max-width: 95%;
+    margin: 1em auto;
 }

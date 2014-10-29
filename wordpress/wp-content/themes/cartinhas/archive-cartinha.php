@@ -10,15 +10,31 @@
                         </h1>
                     </div>
 
-                    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+                    <!-- Carrossel -->
+                    <div id="archive-cartinhas" class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                        <?php if (have_posts()) : $i=0; while (have_posts()) : the_post(); ?>
+                            <div class="item <?php echo $i===0?'active':''; ?>">
+                                <?php the_post_thumbnail('medium'); ?>
+                                <div class="carousel-caption"></div>
+                            </div>
+                            <?php $i++; ?>
+                        <?php endwhile; ?>
+                        </div>
 
-                    <div class="col-sm-4 cartinha" id="post-<?php the_ID(); ?>">
-                        <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#archive-cartinhas" role="button" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#archive-cartinhas" role="button" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right"></span>
                         </a>
                     </div>
+                    <!-- /Carrossel -->
 
-                    <?php endwhile; ?>
+
+
 
 
                     <?php else : ?>
