@@ -146,12 +146,17 @@ body > .container {
     margin: 1em 0;
 }
 
-.post-type-archive-cartinha #content .carousel-control.left,
-.post-type-archive-cartinha #content .carousel-control.right {
+#archive-cartinhas {
+    margin: 0 auto;
+    max-width: 773px;
+}
+
+#archive-cartinhas .carousel-control.left,
+#archive-cartinhas .carousel-control.right {
     background-image: none;
 }
 
-.post-type-archive-cartinha #content .carousel-control .glyphicon {
+#archive-cartinhas .carousel-control .glyphicon {
     color: gray;
 }
 
