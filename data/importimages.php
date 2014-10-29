@@ -31,6 +31,17 @@ while ($file = readdir($handler)) { // $i = URL da imagem
         continue;
     }
 
+    $query = "SELECT count(0) FROM $wpdb->posts WHERE post_name=%s AND post_type='cartinha';";
+    $query = $wpdb->prepare($query, strtolower($file_name));
+
+    $result = $wpdb->get_var($query);
+    $result = intval($result);
+
+    if($result && $result > 0) {
+        echo "! A cartinha $file_name já foi importada\n";
+        continue;
+    }
+
     // Cria um post
     $postID = wp_insert_post(
         array(
@@ -61,5 +72,7 @@ while ($file = readdir($handler)) { // $i = URL da imagem
     wp_update_attachment_metadata( $attachment_id, $attach_data );
 
     set_post_thumbnail($postID, $attachment_id);
+
+    echo "> Importada a cartinha '$file_name'\n";
 }
 
