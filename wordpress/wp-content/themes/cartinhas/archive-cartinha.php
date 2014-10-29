@@ -16,7 +16,7 @@
                         <div class="carousel-inner">
                         <?php if (have_posts()) : $i=0; while (have_posts()) : the_post(); ?>
                             <div class="item <?php echo $i===0?'active':''; ?>">
-                                <?php the_post_thumbnail('medium'); ?>
+                                <?php the_post_thumbnail('large'); ?>
                                 <div class="carousel-caption"></div>
                             </div>
                             <?php $i++; ?>

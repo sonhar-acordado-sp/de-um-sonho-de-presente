@@ -146,8 +146,13 @@ body > .container {
     margin: 1em 0;
 }
 
-.post-type-archive-cartinha #content .carousel-inner {
-    background-color: #AEA9AD;
+.post-type-archive-cartinha #content .carousel-control.left,
+.post-type-archive-cartinha #content .carousel-control.right {
+    background-image: none;
+}
+
+.post-type-archive-cartinha #content .carousel-control .glyphicon {
+    color: gray;
 }
 
 .post-type-archive-cartinha #content img {
