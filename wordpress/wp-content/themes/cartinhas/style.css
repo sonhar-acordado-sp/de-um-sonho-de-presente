@@ -87,12 +87,12 @@ body > .container {
 }
 
 .home #content .carousel {
-    width: 415px;
-    height: 280px;
     margin-top: 45px;
     margin-right: 45px;
     float: right;
     overflow: hidden;
+    box-shadow: 0 0 10px black;
+    border: 1px solid black;
 }
 
 .home #content .carousel .item img{

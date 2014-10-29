@@ -119,7 +119,7 @@ function gallery_shortcode_sa($attr) {
             $active_class = $i === 0 ? ' active' : '';
 
             $output .= "<div class=\"item{$active_class}\">";
-            $output .= wp_get_attachment_link($attachment->ID, $atts['size'], true, false );
+            $output .= wp_get_attachment_image($attachment->ID, $atts['size']);
             //$output .= "<div class=\"carousel-caption\">{$attachment->post_title}</div>";
             $output .= '</div>'; // item
             $i = $i + 1;
