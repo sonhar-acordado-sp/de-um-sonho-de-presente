@@ -24,8 +24,8 @@ function enqueue_child_theme_styles() {
 }
 
 // remove the standard shortcode
-remove_shortcode('galleria', 'gallery_shortcode');
-add_shortcode('galleria', 'gallery_shortcode_sa');
+remove_shortcode('gallery', 'gallery_shortcode');
+add_shortcode('gallery', 'gallery_shortcode_sa');
 
 function gallery_shortcode_sa($attr) {
     global $post, $wp_locale;
@@ -54,10 +54,12 @@ function gallery_shortcode_sa($attr) {
         'size'       => 'large',
         'include'    => '',
         'exclude'    => '',
-        'link'       => ''
+        'link'       => '',
+        'indicators' => false
     ), $attr, 'gallery' );
 
     $id = intval( $atts['id'] );
+    $atts['indicators'] = $atts['indicators'] === 'true';
 
     if ( !empty( $atts['include'] ) ) {
         $_attachments = get_posts(array(
@@ -99,15 +101,17 @@ function gallery_shortcode_sa($attr) {
     $output = '<div id="' . $carousel_id . '" class="carousel slide" data-ride="carousel">';
     if ($attachments) {
         $i = 0;
-        $output .= '<ol class="carousel-indicators">';
-        foreach ( $attachments as $attachment ) {
-            $output .= "<li data-target=\"#{$carousel_id}\" data-slide-to=\"{$i}\"";
-            $output .= $i === 0 ? " class=\"active\">" : ">";
-            $output .= "</li>";
-            $i = $i + 1;
-        }
-        $output .= '</ol>';
 
+        if($atts['indicators']) {
+            $output .= '<ol class="carousel-indicators">';
+            foreach ( $attachments as $attachment ) {
+                $output .= "<li data-target=\"#{$carousel_id}\" data-slide-to=\"{$i}\"";
+                $output .= $i === 0 ? " class=\"active\">" : ">";
+                $output .= "</li>";
+                $i = $i + 1;
+            }
+            $output .= '</ol>';
+        }
 
         $i = 0;
         $output .= '<div class="carousel-inner">';
