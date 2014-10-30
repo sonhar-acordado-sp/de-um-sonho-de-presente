@@ -138,3 +138,120 @@ function gallery_shortcode_sa($attr) {
 
     return $output;
 }
+
+
+add_action( 'admin_menu', 'theme_options' );
+add_action( 'admin_init', 'register_cartinhas_settings' );
+
+function register_cartinhas_settings() {
+    register_setting( 'cartinhas_options', 'doacao_alimentacao' );
+    register_setting( 'cartinhas_options', 'doacao_transporte' );
+    register_setting( 'cartinhas_options', 'doacao_camiseta' );
+    register_setting( 'cartinhas_options', 'email_da_loja' );
+    register_setting( 'cartinhas_options', 'url_retorno_bcash' );
+}
+
+function theme_options() {
+    add_options_page( 'Opções do Sonhador', 'Cartinhas', 'manage_options', 'theme-cartinhas', 'cartinhas_options' );
+}
+
+function cartinhas_options() {
+    if ( !current_user_can( 'manage_options' ) )  {
+        wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+    }
+    ?>
+
+    <style type="text/css">
+        #cartinhas-config-form table td {
+            min-width: 5em;
+        }
+        #cartinhas-config-form table td:last-child {
+            text-align: center;
+        }
+
+        #cartinhas-config-form table td span:before {
+            content: 'R$ ';
+        }
+    </style>
+
+    <div id="cartinhas-config-form" class="wrap">
+        <form method="post" action="options.php">
+            <?php
+                settings_fields( 'cartinhas_options' );
+                do_settings_sections( 'cartinhas_options' );
+            ?>
+
+            <h1>Configuração do tema Cartinhas</h1>
+            <hr />
+            <h2><!-- O status do save vem depois do primeiro H2 --></h2>
+
+
+            <h2>Valores para doação</h2>
+            <p>
+                O valor para doação de <b>transporte</b>,
+                <b>alimentação</b> ea <b>camiseta</b> é único e
+                deve ser fornecido abaixo.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Novo</th>
+                        <th>Atual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label for="doacao_alimentacao">Valor para alimentação:</label></td>
+                        <td><input name="doacao_alimentacao" id="doacao_alimentacao" type="number"
+                                   value="<?php echo get_option('doacao_alimentacao'); ?>"/></td>
+                        <td><span><?php echo get_option('doacao_alimentacao'); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="doacao_transporte">Valor para transporte:</label></td>
+                        <td><input name="doacao_transporte" id="doacao_transporte" type="number"
+                                   value="<?php echo get_option('doacao_transporte'); ?>"/></td>
+                        <td><span><?php echo get_option('doacao_transporte'); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="doacao_camiseta">Valor para camiseta:</label></td>
+                        <td><input name="doacao_camiseta" id="doacao_camiseta" type="number"
+                                   value="<?php echo get_option('doacao_camiseta'); ?>"/></td>
+                        <td><span><?php echo get_option('doacao_camiseta'); ?></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+
+            <h2>Configurações do BCash</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Novo</th>
+                        <th>Atual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label for="email_da_loja">Email da loja:</label></td>
+                        <td><input name="email_da_loja" id="email_da_loja" type="email"
+                                   value="<?php echo get_option('email_da_loja'); ?>"/></td>
+                        <td><?php echo get_option('email_da_loja'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><label for="url_retorno_bcash">URL de retorno:</label></td>
+                        <td><input name="url_retorno_bcash" id="url_retorno_bcash" type="text"
+                                   value="<?php echo get_option('url_retorno_bcash'); ?>"/></td>
+                        <td><?php echo get_option('url_retorno_bcash'); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}

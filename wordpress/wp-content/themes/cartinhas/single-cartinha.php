@@ -9,25 +9,13 @@
                     <article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 
                         <header>
-                            <div class="page-header"><h1 class="single-title" itemprop="headline"><?php the_title(); ?></h1></div>
+                            <div class="page-header"><h1 class="single-title" itemprop="headline">Doar para esta cartinha</h1></div>
                         </header> <!-- end article header -->
 
                         <section class="post_content clearfix" itemprop="articleBody">
-                            <?php the_post_thumbnail( 'wpbs-featured' ); ?>
+                            <?php the_post_thumbnail( 'large' ); ?>
                         </section> <!-- end article section -->
 
-                        <footer>
-
-                            <?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","wpbootstrap") . ':</span> ', ' ', '</p>'); ?>
-
-                            <?php
-                            // only show edit button if user has permission to edit posts
-                            if( $user_level > 0 ) {
-                            ?>
-                            <a href="<?php echo get_edit_post_link(); ?>" class="btn btn-success edit-post"><i class="icon-pencil icon-white"></i> <?php _e("Edit post","wpbootstrap"); ?></a>
-                            <?php } ?>
-
-                        </footer> <!-- end article footer -->
 
                     </article> <!-- end article -->
                     <?php endwhile; ?>
@@ -48,6 +36,47 @@
                 </div> <!-- end #main -->
 
                 <div class="col-sm-4 clearfix" role="main">
+                    <form name="bcash-al" action="https://www.bcash.com.br/checkout/pay/" method="post">
+                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+
+                        <input name="produto_codigo_1" type="hidden" value="AL-<?php the_title(); ?>">
+                        <input name="produto_descricao_1" type="hidden" value="Contribuição para alimentação (<?php the_title(); ?>)">
+                        <input name="produto_qtde_1" type="hidden" value="1">
+                        <input name="produto_valor_1" type="hidden"
+                               value="<?php echo get_option('doacao_alimentacao'); ?>">
+                        <input name="url_retorno" type="hidden"
+                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+
+                        <button>Contribuir com a alimentação</button>
+                    </form>
+
+                    <form name="bcash-tr" action="https://www.bcash.com.br/checkout/pay/" method="post">
+                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+
+                        <input name="produto_codigo_1" type="hidden" value="TR-<?php the_title(); ?>">
+                        <input name="produto_descricao_1" type="hidden" value="Contribuição para o transporte (<?php the_title(); ?>)">
+                        <input name="produto_qtde_1" type="hidden" value="1">
+                        <input name="produto_valor_1" type="hidden"
+                               value="<?php echo get_option('doacao_transporte'); ?>">
+                        <input name="url_retorno" type="hidden"
+                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+
+                        <button>Contribuir com o transporte</button>
+                    </form>
+
+                    <form name="bcash-ca" action="https://www.bcash.com.br/checkout/pay/" method="post">
+                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+
+                        <input name="produto_codigo_1" type="hidden" value="AL-<?php the_title(); ?>">
+                        <input name="produto_descricao_1" type="hidden" value="Contribuição para a camiseta (<?php the_title(); ?>)">
+                        <input name="produto_qtde_1" type="hidden" value="1">
+                        <input name="produto_valor_1" type="hidden"
+                               value="<?php echo get_option('doacao_camiseta'); ?>">
+                        <input name="url_retorno" type="hidden"
+                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+
+                        <button>Contribuir com a camiseta</button>
+                    </form>
                 </div>
 
             </div> <!-- end #content -->
