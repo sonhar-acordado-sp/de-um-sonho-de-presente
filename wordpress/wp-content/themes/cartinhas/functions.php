@@ -260,3 +260,13 @@ function cartinhas_options() {
     </div>
     <?php
 }
+
+function list_cartinhas() {
+    $args = array(
+        'orderby'          => 'post_date',
+        'order'            => 'DESC',
+        'post_type'        => 'cartinha',
+        'post_status'      => 'publish'
+    );
+    return get_posts($args);
+}

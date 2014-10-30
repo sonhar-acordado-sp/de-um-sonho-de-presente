@@ -97,6 +97,7 @@ body > .container {
     min-height: 350px;
     padding-top: 0;
     width: 100%;
+    position: relative
 }
 
 .home > .container #content .featured-image {
@@ -104,18 +105,28 @@ body > .container {
     overflow: hidden;
     height: 350px;
     text-align: center;
-    box-shadow: 0 0 5px gray;
+    box-shadow: 0 0 3px gray;
 }
 
 .home > .container #content .featured-image img {
     width: 100%;
 }
 
+.home .cartinhas,
 .home .post_content {
     margin-top: 1em;
     font-size: 1.5em;
     background-color: whitesmoke;
     box-shadow: 0 0 5px lightgray;
+}
+
+#home-galeria-cartinhas {
+    max-height: 500px;
+    overflow: hidden;
+}
+
+#home-galeria-cartinhas > .item > img, .carousel-inner > .item > a > img {
+
 }
 
 .page .container h1,
@@ -153,6 +164,24 @@ body > .container {
     margin-left: -15px;
 }
 
+.home .cartinhas h2 {
+    position: absolute;
+    z-index: 1;
+}
+
+#status-da-festa{
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 350px;
+    padding: 1.5em 1em;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#status-da-festa .item {
+    margin: 1em 0;
+}
+
 #main article {
     border-bottom-color: transparent;
 }
@@ -163,6 +192,7 @@ body > .container {
     margin: 1.5em;
 }
 
+#status-da-festa,
 .home .post-content,
 .page-header .page-title,
 .page .post_content > * {
