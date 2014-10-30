@@ -5,30 +5,21 @@ Template Name: Homepage
 ?>
 
 <?php get_header(); ?>
+            <?php
+            if (have_posts()):
+                while (have_posts()):
+                    the_post();
+            ?>
 
-            <div id="content" class="clearfix row">
-
-                <img class="placa-da-festa" alt="Título da festa" title="Festa de Natal no Reino da Dignidade"
-                     src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa.png" />
-                <?php
-                if (have_posts()):
-                    while (have_posts()):
-                        the_post();
-                ?>
-                <?php the_content(); ?>
-
-                <div class="col-sm-12 placas clearfix">
-                    <div class="col-sm-6 text-center pull-left">
-                        <a target="_blank" href="https://www.facebook.com/ONGSonharAcordadoSP"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-facebook.png" /></a>
-                    </div>
-                    <div class="col-sm-6 text-center pull-right">
-                        <a target="_blank" href="http://sonharacordado.org.br/saopaulo/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/placa-site-oficial.png" /></a>
-                    </div>
+            <div id="content" class="">
+                <h1><?php echo get_bloginfo('name'); ?></h1>
+                <div class="featured-image"><?php the_post_thumbnail('full'); ?></div>
+                <div class="clearfix">
+                    <div class="post_content col-sm-6"><?php the_content(); ?></div>
+                    <div class="cartinhas col-sm-6"></div>
                 </div>
+            </div>
 
-
-                <?php endwhile; ?>
-                <?php endif; ?>
-            </div> <!-- end #content -->
-
+            <?php endwhile; ?>
+            <?php endif; ?>
 <?php get_footer(); ?>

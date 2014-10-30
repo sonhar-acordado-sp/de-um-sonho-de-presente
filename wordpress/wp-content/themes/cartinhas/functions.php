@@ -1,5 +1,8 @@
 <?php
 
+// esconde barra de admin
+add_filter('show_admin_bar', '__return_false');
+
 // registra post type
 add_action('init', 'register_cartinha_post_type');
 function register_cartinha_post_type() {
@@ -17,7 +20,9 @@ function register_cartinha_post_type() {
 add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
 function enqueue_child_theme_styles() {
     wp_register_style('lato-font', 'http://fonts.googleapis.com/css?family=Lato:300,400,700', array(), '1.0', 'all' );
-    wp_enqueue_style('lato-font' );
+    wp_register_style('ubuntu-font', 'http://fonts.googleapis.com/css?family=Ubuntu:400,500,700', array(), '1.0', 'all' );
+    wp_enqueue_style('lato-font');
+    wp_enqueue_style('ubuntu-font');
 
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style('child-style', get_stylesheet_uri(), array('parent-style')  );

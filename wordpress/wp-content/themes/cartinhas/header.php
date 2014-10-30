@@ -35,8 +35,9 @@
 
     <body <?php body_class(); ?>>
 
-        <header role="banner">
+        <div id="background-image"><!-- imagem de fundo fixa --></div>
 
+        <header role="banner">
             <div class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
