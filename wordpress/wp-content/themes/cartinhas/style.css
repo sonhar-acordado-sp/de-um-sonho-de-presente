@@ -150,7 +150,7 @@ body > .container {
     text-shadow: 0 0 2px black;
 }
 
-.page h1:before,
+.home h1:before,
 .home h2:before {
     content: ' ';
     border: 12px solid transparent;
