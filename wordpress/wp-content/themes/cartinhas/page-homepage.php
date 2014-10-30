@@ -56,7 +56,7 @@ Template Name: Homepage
                     </div>
                 </div>
 
-                <div class="clearfix">
+                <div class="clearfix home-content">
                     <div class="post_content col-sm-6"><?php the_content(); ?></div>
                     <div class="cartinhas col-sm-5 pull-right">
                         <!-- bootstrap carrossel -->
