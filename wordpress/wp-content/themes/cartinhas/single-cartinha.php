@@ -37,7 +37,7 @@
                 </div> <!-- end #main -->
 
                 <div class="col-sm-4 donation-forms" role="main">
-                    <h3>Total desta cartinha</h3>
+                    <h3 class="text-center">Total desta cartinha</h3>
                     <div class="clearfix">
                         <div class="col-sm-11">
                             <div class="progress">
@@ -56,10 +56,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Alimentação para o dia</h4>
                         <span>R$ <?php echo get_option('doacao_alimentacao'); ?></span>
-                        <button class="btn btn-info pull-right"
-                                data-value="<?php echo get_option('doacao_alimentacao'); ?>"
-                                data-item="AL-<?php the_title(); ?>"
-                                data-desc="Doação para alimentação da festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right btn-AL-<?php the_title(); ?>"
+                                bcash-value="<?php echo get_option('doacao_alimentacao'); ?>"
+                                bcash-item="AL-<?php the_title(); ?>"
+                                bcash-desc="Doação para alimentação da festa de Natal">Ajudar</button>
                       </div>
                     </div>
 
@@ -71,10 +71,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Transporte até o local</h4>
                         <span>R$ <?php echo get_option('doacao_transporte'); ?></span>
-                        <button class="btn btn-info pull-right"
-                                data-value="<?php echo get_option('doacao_transporte'); ?>"
-                                data-item="TR-<?php the_title(); ?>"
-                                data-desc="Doação para o transporte na festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right btn-TR-<?php the_title(); ?>"
+                                bcash-value="<?php echo get_option('doacao_transporte'); ?>"
+                                bcash-item="TR-<?php the_title(); ?>"
+                                bcash-desc="Doação para o transporte na festa de Natal">Ajudar</button>
                       </div>
                     </div>
 
@@ -85,10 +85,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Camiseta de identificação</h4>
                         <span>R$ <?php echo get_option('doacao_camiseta'); ?></span>
-                        <button class="btn btn-info pull-right"
-                                data-value="<?php echo get_option('doacao_camiseta'); ?>"
-                                data-item="CA-<?php the_title(); ?>"
-                                data-desc="Doação para camiseta na festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right btn-CA-<?php the_title(); ?>"
+                                bcash-value="<?php echo get_option('doacao_camiseta'); ?>"
+                                bcash-item="CA-<?php the_title(); ?>"
+                                bcash-desc="Doação para camiseta na festa de Natal">Ajudar</button>
                       </div>
                     </div>
 
@@ -98,14 +98,29 @@
                     <hr/>
 
                     <div class="clearfix text-center">
-                        <button class="btn btn-success">Concluir do doação</button>
-                        <p><small>Você será redirecionado ao site<br><b>BCash</b> para concluir a doação.</small></p>
+                        <button class="btn btn-success bcash-conclude">Concluir doação</button>
+                        <p class="text-info"><small>Você será redirecionado ao site<br><b>BCash</b> para concluir a doação.</small></p>
                     </div>
 
                     <hr/>
-                    <div class="clearfix text-center">
-                        <h3>Ajuda total</h3>
-                        <big data-total="0">R$ 33,00</big>
+                    <div class="clearfix">
+                        <div class="text-center">
+                            <h3>Ajuda total</h3>
+                            <big class="bcash-total">R$ 0,00</big>
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <div class="clearfix">
+                        <div class="text-center">
+                            <h3>Resumo</h3>
+                            <p><small class="text-danger">Abaixo, a sua lista de doações.<br/>
+                            Você pode remover itens desta lista.</small></p>
+                        </div>
+                        <br />
+                        <ul class="bcash-list">
+
+                        </ul>
                     </div>
                 </div>
 
