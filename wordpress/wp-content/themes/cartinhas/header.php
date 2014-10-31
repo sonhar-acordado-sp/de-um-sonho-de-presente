@@ -36,24 +36,28 @@
     <body <?php body_class(); ?>>
         <header role="banner">
             <div class="navbar navbar-default">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+                <div class="container row">
+                    <div class="col-sm-4">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <a title="<?php echo get_bloginfo('description'); ?>" href="<?php echo home_url(); ?>">
+                            <img class="logo" alt="Logotipo da ONG Sonhar Acordado"
+                                 src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/logo_sonhar.png" />
+                        </a>
                     </div>
 
-                    <a title="<?php echo get_bloginfo('description'); ?>" href="<?php echo home_url(); ?>">
-                        <img class="logo" alt="Logotipo da ONG Sonhar Acordado"
-                             src="<?php echo get_stylesheet_directory_uri(); ?>/imgs/logo_sonhar.png" />
-                    </a>
-
-                    <div class="collapse navbar-collapse navbar-responsive-collapse pull-right">
-                        <?php wp_bootstrap_main_nav(); // Adjust using Menus in Wordpress Admin ?>
+                    <div class="col-sm-8">
+                        <div class="collapse navbar-collapse navbar-responsive-collapse pull-right">
+                            <?php wp_bootstrap_main_nav(); // Adjust using Menus in Wordpress Admin ?>
+                        </div>
+                        <?php get_search_form(); ?>
                     </div>
-
                 </div> <!-- end .container -->
             </div> <!-- end .navbar -->
 
