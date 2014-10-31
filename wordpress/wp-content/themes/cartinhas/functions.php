@@ -273,17 +273,19 @@ function cartinhas_options() {
     <?php
 }
 
+function __add_settings_control($wp_customize, $label, $key, $default) {
+    $wp_customize->add_setting($key, array(
+        'default' => $default, 'type' => 'option', 'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $key, array(
+        'label'    => $label, 'section'  => 'colors',
+    )));
+}
 
 function cartinhas_customize_register($wp_customize){
-    $wp_customize->add_setting( 'cartinhas_header_menu_color', array(
-        'default'        => '#FFFFFF',
-        'type'           => 'option',
-        'capability'     => 'edit_theme_options',
-    ));
-
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'cartinhas_header_menu_color', array(
-        'label'    => __('Menu text color'), 'section'  => 'colors',
-    )));
+    __add_settings_control($wp_customize, __('Menu text color'), 'cartinhas_header_menu_color', '#000000');
+    __add_settings_control($wp_customize, __('Menu text hover color'), 'cartinhas_header_menu_color_hover', '#000000');
+    __add_settings_control($wp_customize, __('Menu text shadow'), 'cartinhas_header_menu_text_shadow', '#FFFFFF');
 }
 add_action('customize_register', 'cartinhas_customize_register');
 
@@ -294,6 +296,10 @@ function cartinhas_custom_css()
          <style type="text/css">
              .navbar-default .navbar-nav > li > a {
                 color: <?php echo get_option('cartinhas_header_menu_color', '#000000'); ?>;
+                text-shadow: 0 0 3px <?php echo get_option('cartinhas_header_menu_text_shadow', '#FFF'); ?>;
+            }
+             .navbar-default .navbar-nav > li > a:hover {
+                color: <?php echo get_option('cartinhas_header_menu_color_hover', '#000000'); ?>;
             }
          </style>
     <?php
