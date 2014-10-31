@@ -273,6 +273,38 @@ function cartinhas_options() {
     <?php
 }
 
+
+function cartinhas_customize_register($wp_customize){
+    $wp_customize->add_setting( 'cartinhas_header_menu_color', array(
+        'default'        => '#FFFFFF',
+        'type'           => 'option',
+        'capability'     => 'edit_theme_options',
+    ));
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'cartinhas_header_menu_color', array(
+        'label'    => __('Menu text color'), 'section'  => 'colors',
+    )));
+}
+add_action('customize_register', 'cartinhas_customize_register');
+
+
+function cartinhas_custom_css()
+{
+    ?>
+         <style type="text/css">
+             .navbar-default .navbar-nav > li > a {
+                color: <?php echo get_option('cartinhas_header_menu_color', '#000000'); ?>;
+            }
+         </style>
+    <?php
+}
+add_action( 'wp_head', 'cartinhas_custom_css');
+
+
+/*
+ * Funções do nosso negócio
+ */
+
 function list_cartinhas() {
     $args = array(
         'orderby'          => 'post_date',
@@ -282,3 +314,4 @@ function list_cartinhas() {
     );
     return get_posts($args);
 }
+
