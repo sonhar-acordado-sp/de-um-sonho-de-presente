@@ -152,6 +152,7 @@ function register_cartinhas_settings() {
     register_setting( 'cartinhas_options', 'doacao_alimentacao' );
     register_setting( 'cartinhas_options', 'doacao_transporte' );
     register_setting( 'cartinhas_options', 'doacao_camiseta' );
+    register_setting( 'cartinhas_options', 'doacao_meta_por_carta' );
     register_setting( 'cartinhas_options', 'email_da_loja' );
     register_setting( 'cartinhas_options', 'url_retorno_bcash' );
 }
@@ -224,6 +225,12 @@ function cartinhas_options() {
                         <td><input name="doacao_camiseta" id="doacao_camiseta" type="number"
                                    value="<?php echo get_option('doacao_camiseta'); ?>"/></td>
                         <td><span><?php echo get_option('doacao_camiseta'); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="doacao_meta_por_carta">Valor meta por carta:</label></td>
+                        <td><input name="doacao_meta_por_carta" id="doacao_meta_por_carta" type="number"
+                                   value="<?php echo get_option('doacao_meta_por_carta'); ?>"/></td>
+                        <td><span><?php echo get_option('doacao_meta_por_carta'); ?></span></td>
                     </tr>
                 </tbody>
             </table>

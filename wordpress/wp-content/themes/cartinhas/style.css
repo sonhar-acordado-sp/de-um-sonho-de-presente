@@ -26,18 +26,6 @@ body {
     position: relative;
 }
 
-#background-image {
-    /* background-color: #0098d4; */
-    bottom: 0;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: -1;
-}
-
 header[role=banner],
 div.container {
     max-width: 970px;
@@ -55,6 +43,11 @@ header .navbar-default {
 
 header .container .logo {
     margin-left: 10px;
+}
+
+.page-header {
+    margin: 0;
+    border-width: 0;
 }
 
 .navbar-default .navbar-nav .caret {
@@ -92,12 +85,16 @@ body > .container {
     padding: 0;
 }
 
-.home > .container #content {
-    margin-top: 0;
-    min-height: 350px;
+#content {
+    margin: 0;
     padding-top: 0;
+    position: relative;
+    max-width: 100%;
+}
+
+.home > .container #content {
+    min-height: 350px;
     width: 100%;
-    position: relative
 }
 
 .home > .container #content .featured-image {
@@ -130,10 +127,7 @@ body > .container {
     overflow: hidden;
 }
 
-#home-galeria-cartinhas > .item > img, .carousel-inner > .item > a > img {
-
-}
-
+.single .single-title,
 .page .container h1,
 .page .container h2 {
     display: inline-block;
@@ -191,12 +185,6 @@ body > .container {
     border-bottom-color: transparent;
 }
 
-.single #main,
-.archive #main,
-.page #main{
-    margin: 1.5em;
-}
-
 #status-da-festa,
 .home .post-content,
 .page-header .page-title,
@@ -230,4 +218,31 @@ body > .container {
 
 .post-type-archive-cartinha #content img {
     margin: 1em auto;
+}
+
+.page-template-default > .container,
+.single > .container {
+    background-color: white;
+}
+
+.single-cartinha h3 {
+    font-family: 'Ubuntu', 'Lato';
+    font-weight: 700;
+}
+
+.single-cartinha .page-header {
+    padding-left: 13px;
+}
+
+.single-cartinha .donation-forms .item {
+    margin: 2em 0;
+}
+
+.single .donation-forms,
+.single-cartinha #main {
+    padding: 0;
+}
+
+.page-template-default #main {
+    padding: 0 13px;
 }

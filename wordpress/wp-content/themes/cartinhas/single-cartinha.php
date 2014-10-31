@@ -1,16 +1,17 @@
 <?php get_header(); ?>
 
-            <div id="content" class="clearfix row">
+            <div id="content" class="clearfix">
 
-                <div id="main" class="col-sm-8 clearfix" role="main">
+                <header>
+                    <div class="page-header"><h1 class="single-title" itemprop="headline">Doar para esta cartinha</h1></div>
+                </header>
+
+                <div id="main" class="col-sm-8" role="main">
 
                     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
                     <article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 
-                        <header>
-                            <div class="page-header"><h1 class="single-title" itemprop="headline">Doar para esta cartinha</h1></div>
-                        </header> <!-- end article header -->
 
                         <section class="post_content clearfix" itemprop="articleBody">
                             <?php the_post_thumbnail( 'large' ); ?>
@@ -35,48 +36,77 @@
 
                 </div> <!-- end #main -->
 
-                <div class="col-sm-4 clearfix" role="main">
-                    <form name="bcash-al" action="https://www.bcash.com.br/checkout/pay/" method="post">
-                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+                <div class="col-sm-4 donation-forms" role="main">
+                    <h3>Total desta cartinha</h3>
+                    <div class="clearfix">
+                        <div class="col-sm-11">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    60%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
 
-                        <input name="produto_codigo_1" type="hidden" value="AL-<?php the_title(); ?>">
-                        <input name="produto_descricao_1" type="hidden" value="Contribuição para alimentação (<?php the_title(); ?>)">
-                        <input name="produto_qtde_1" type="hidden" value="1">
-                        <input name="produto_valor_1" type="hidden"
-                               value="<?php echo get_option('doacao_alimentacao'); ?>">
-                        <input name="url_retorno" type="hidden"
-                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+                    <div class="clearfix item">
+                      <a class="media-left col-sm-2 pull-left" href="#">
+                        <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-38.png" alt="Alimentação"/>
+                      </a>
+                      <div class="col-sm-9 pull-right">
+                        <h4>Alimentação para o dia</h4>
+                        <span>R$ <?php echo get_option('doacao_alimentacao'); ?></span>
+                        <button class="btn btn-info pull-right"
+                                data-value="<?php echo get_option('doacao_alimentacao'); ?>"
+                                data-item="AL-<?php the_title(); ?>"
+                                data-desc="Doação para alimentação da festa de Natal">Ajudar</button>
+                      </div>
+                    </div>
 
-                        <button>Contribuir com a alimentação</button>
-                    </form>
 
-                    <form name="bcash-tr" action="https://www.bcash.com.br/checkout/pay/" method="post">
-                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+                    <div class="clearfix item">
+                      <a class="media-left col-sm-2 pull-left" href="#">
+                        <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-17.png" alt="Transporte"/>
+                      </a>
+                      <div class="col-sm-9 pull-right">
+                        <h4>Transporte até o local</h4>
+                        <span>R$ <?php echo get_option('doacao_transporte'); ?></span>
+                        <button class="btn btn-info pull-right"
+                                data-value="<?php echo get_option('doacao_transporte'); ?>"
+                                data-item="TR-<?php the_title(); ?>"
+                                data-desc="Doação para o transporte na festa de Natal">Ajudar</button>
+                      </div>
+                    </div>
 
-                        <input name="produto_codigo_1" type="hidden" value="TR-<?php the_title(); ?>">
-                        <input name="produto_descricao_1" type="hidden" value="Contribuição para o transporte (<?php the_title(); ?>)">
-                        <input name="produto_qtde_1" type="hidden" value="1">
-                        <input name="produto_valor_1" type="hidden"
-                               value="<?php echo get_option('doacao_transporte'); ?>">
-                        <input name="url_retorno" type="hidden"
-                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+                    <div class="clearfix item">
+                      <a class="media-left col-sm-2 pull-left" href="#">
+                        <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-04.png" alt="Camiseta de identificação"/>
+                      </a>
+                      <div class="col-sm-9 pull-right">
+                        <h4>Camiseta de identificação</h4>
+                        <span>R$ <?php echo get_option('doacao_camiseta'); ?></span>
+                        <button class="btn btn-info pull-right"
+                                data-value="<?php echo get_option('doacao_camiseta'); ?>"
+                                data-item="CA-<?php the_title(); ?>"
+                                data-desc="Doação para camiseta na festa de Natal">Ajudar</button>
+                      </div>
+                    </div>
 
-                        <button>Contribuir com o transporte</button>
-                    </form>
+                    <hr/>
 
-                    <form name="bcash-ca" action="https://www.bcash.com.br/checkout/pay/" method="post">
-                        <input name="email_loja" type="hidden" value="<?php echo get_option('email_da_loja'); ?>">
+                    <div class="clearfix text-center"><button class="btn btn-info">Ler outra cartinha</button></div>
+                    <hr/>
 
-                        <input name="produto_codigo_1" type="hidden" value="AL-<?php the_title(); ?>">
-                        <input name="produto_descricao_1" type="hidden" value="Contribuição para a camiseta (<?php the_title(); ?>)">
-                        <input name="produto_qtde_1" type="hidden" value="1">
-                        <input name="produto_valor_1" type="hidden"
-                               value="<?php echo get_option('doacao_camiseta'); ?>">
-                        <input name="url_retorno" type="hidden"
-                               value="<?php echo get_option('url_retorno_bcash'); ?>">
+                    <div class="clearfix text-center">
+                        <button class="btn btn-success">Concluir do doação</button>
+                        <p><small>Você será redirecionado ao site<br><b>BCash</b> para concluir a doação.</small></p>
+                    </div>
 
-                        <button>Contribuir com a camiseta</button>
-                    </form>
+                    <hr/>
+                    <div class="clearfix text-center">
+                        <h3>Ajuda total</h3>
+                        <big data-total="0">R$ 33,00</big>
+                    </div>
                 </div>
 
             </div> <!-- end #content -->
