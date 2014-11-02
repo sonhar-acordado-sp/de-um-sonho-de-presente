@@ -24,7 +24,7 @@ Template Name: Homepage
                       </a>
                       <div class="col-sm-10 pull-right">
                         <h4>Alimentação</h4>
-                        <span>Já temos <u>30</u> lanchinhos garantidos!</span>
+                        <span>Já temos <u><?php echo calculate_achieved('Alimentação'); ?></u> lanchinhos garantidos!</span>
                       </div>
                     </div>
                     <div class="clearfix item">
@@ -33,16 +33,16 @@ Template Name: Homepage
                       </a>
                       <div class="col-sm-10 pull-right">
                         <h4>Transporte</h4>
-                        <span>Já conseguiremos transportar <u>100</u> crianças!</span>
+                        <span>Já conseguiremos transportar <u><?php echo calculate_achieved('Transporte'); ?></u> crianças!</span>
                       </div>
                     </div>
-                    <div class="clearfix item">
+                    <div class="clearfix item hidden">
                       <a class="media-left col-sm-1" href="#">
                         <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-20.png" alt="Presentes"/>
                       </a>
                       <div class="col-sm-10 pull-right">
                         <h4 class="text-error">Presentes</h4>
-                        <span>Já conseguimos <u>90</u> presentes!</span>
+                        <span>Já conseguimos <u>?</u> presentes!</span>
                       </div>
                     </div>
                     <div class="clearfix item">
@@ -51,7 +51,7 @@ Template Name: Homepage
                       </a>
                       <div class="col-sm-10 pull-right">
                         <h4>Camisetas</h4>
-                        <span>Já conseguimos <u>45</u> camisetas!</span>
+                        <span>Já conseguimos <u><?php echo calculate_achieved('Camiseta'); ?></u> camisetas!</span>
                       </div>
                     </div>
                 </div>

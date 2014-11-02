@@ -321,3 +321,27 @@ function list_cartinhas() {
     return get_posts($args);
 }
 
+function calculate_achieved($subject) {
+    global $wpdb;
+
+    $dict = array(
+        'Alimentação' => 'alimentacao',
+        'Transporte' => 'transporte',
+        'Camiseta' => 'camiseta'
+    );
+    $single_key = 'doacao_' . $dict[$subject];
+
+    $query = "SELECT SUM(meta_value) FROM $wpdb->postmeta WHERE meta_key=%s;";
+    $query = $wpdb->prepare($query, $subject);
+
+    $single = get_option($single_key);
+    $sum = $wpdb->get_var($query);
+
+    $single = intval($single);
+    $sum = intval($sum);
+
+    if($single > 0) {
+        return intval($sum / $single);
+    }
+    return 0;
+}
