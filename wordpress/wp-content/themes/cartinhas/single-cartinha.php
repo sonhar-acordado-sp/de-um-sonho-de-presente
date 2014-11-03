@@ -6,9 +6,9 @@
                     <div class="page-header"><h1 class="single-title" itemprop="headline">Doar para esta cartinha</h1></div>
                 </header>
 
+                <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                 <div id="main" class="col-sm-8" role="main">
 
-                    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
                     <article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -19,20 +19,6 @@
 
 
                     </article> <!-- end article -->
-                    <?php endwhile; ?>
-
-                    <?php else : ?>
-                        <article id="post-not-found">
-                            <header>
-                                <h1><?php _e("Not Found", "wpbootstrap"); ?></h1>
-                            </header>
-                            <section class="post_content">
-                                <p><?php _e("Sorry, but the requested resource was not found on this site.", "wpbootstrap"); ?></p>
-                            </section>
-                            <footer>
-                            </footer>
-                        </article>
-                    <?php endif; ?>
 
                 </div> <!-- end #main -->
 
@@ -41,10 +27,16 @@
                     <div class="clearfix">
                         <div class="col-sm-11">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                    60%
+                                <?php $achieved = calculate_achieved_for_cartinha();
+                                      $desired = intval(get_option('doacao_meta_por_carta'));
+                                      $percent = $desired > 0 ? intval($achieved/$desired * 100) : 0;?>
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="<?php echo calculate_achieved_for_cartinha(); ?>"
+                                     aria-valuemin="0" aria-valuemax="100"
+                                     style="width: <?php echo $percent;?>%;">
                                 </div>
                             </div>
+                            <div class="text-center"><?php echo sprintf('R$ %0.2f', $achieved); ?></div>
                         </div>
                     </div>
                     <hr/>
@@ -124,6 +116,22 @@
                     </div>
                 </div>
 
+                <?php endwhile; ?>
+
+                <?php else : ?>
+                    <div id="main" class="clearfix">
+                        <article id="post-not-found">
+                            <header>
+                                <h1><?php _e("Not Found", "wpbootstrap"); ?></h1>
+                            </header>
+                            <section class="post_content">
+                                <p><?php _e("Sorry, but the requested resource was not found on this site.", "wpbootstrap"); ?></p>
+                            </section>
+                            <footer>
+                            </footer>
+                        </article>
+                    </div>
+                <?php endif; ?>
             </div> <!-- end #content -->
 
 <?php get_footer(); ?>

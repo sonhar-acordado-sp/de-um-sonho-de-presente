@@ -345,3 +345,17 @@ function calculate_achieved($subject) {
     }
     return 0;
 }
+
+function calculate_achieved_for_cartinha($id=null) {
+    global $post;
+
+    if(!$id) {
+        $id = $post->ID;
+    }
+
+    $total = intval(get_post_meta($id, 'Alimentação', true));
+    $total +=  intval(get_post_meta($id, 'Transporte', true));
+    $total +=  intval(get_post_meta($id, 'Camiseta', true));
+
+    return $total;
+}
