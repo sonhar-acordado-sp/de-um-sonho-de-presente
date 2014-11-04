@@ -27,7 +27,8 @@ body {
 }
 
 header[role=banner],
-div.container {
+div.container,
+body > footer {
     max-width: 970px;
     margin: 0px auto;
 }
@@ -282,6 +283,7 @@ body > .container {
     right: 30 em;
 }
 
-body > .container > footer {
+body > footer {
+    margin-top: 1em;
     background-color: white;
 }
