@@ -293,6 +293,7 @@ function cartinhas_customize_register($wp_customize){
     __add_settings_control($wp_customize, __('Menu text color'), 'cartinhas_header_menu_color', '#000000');
     __add_settings_control($wp_customize, __('Menu text hover color'), 'cartinhas_header_menu_color_hover', '#000000');
     __add_settings_control($wp_customize, __('Menu text shadow'), 'cartinhas_header_menu_text_shadow', '#FFFFFF');
+    __add_settings_control($wp_customize, __('Heading colors'), 'cartinhas_heading_color', '#f7db07');
 }
 add_action('customize_register', 'cartinhas_customize_register');
 
@@ -308,6 +309,11 @@ function cartinhas_custom_css()
              .navbar-default .navbar-nav > li > a:hover {
                 color: <?php echo get_option('cartinhas_header_menu_color_hover', '#000000'); ?>;
             }
+
+            .page .container h1, .page .container h2 {
+                background-color: <?php echo get_option('cartinhas_heading_color', '#EC2C26'); ?>;
+            }
+
          </style>
     <?php
 }
