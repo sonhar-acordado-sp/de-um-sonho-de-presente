@@ -393,6 +393,25 @@ function generate_bcash_form_data ( $wp ) {
 
     die(json_encode($form_parts));
 }
+
+add_filter('post_limits', 'postsperpage');
+function postsperpage($limits) {
+    if (is_search()) {
+        $posts_per_page = null;
+
+        if(isset($_REQUEST['posts_per_page'])) {
+            $posts_per_page = $_REQUEST['posts_per_page'];
+        }
+
+        if(is_numeric($posts_per_page)) {
+            $limits = 'LIMIT 0, ' . intval($_REQUEST['posts_per_page']);
+        } else {
+            $limits = '';
+        }
+    }
+    return $limits;
+}
+
 /*
  * Funções do nosso negócio
  */

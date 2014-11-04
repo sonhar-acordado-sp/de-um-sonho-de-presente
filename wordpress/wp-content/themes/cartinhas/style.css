@@ -143,6 +143,7 @@ body > .container {
 }
 
 .single .single-title,
+.search .container h1,
 .page .container h1,
 .page .container h2 {
     display: inline-block;
@@ -235,6 +236,7 @@ body > .container {
     margin: 1em auto;
 }
 
+.search > .container,
 .page-template-default > .container,
 .single > .container {
     background-color: white;
