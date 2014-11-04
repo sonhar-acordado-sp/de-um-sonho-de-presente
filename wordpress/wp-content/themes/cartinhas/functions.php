@@ -388,6 +388,15 @@ function generate_bcash_form_data ( $wp ) {
  * Funções do nosso negócio
  */
 
+function get_next_cartinha() {
+    global $wpdb;
+
+    $query = "SELECT * FROM $wpdb->posts WHERE post_type='cartinha' ORDER BY RAND() LIMIT 1;";
+    $post = $wpdb->get_row($query);
+
+    return $post;
+}
+
 function list_cartinhas() {
     $args = array(
         'orderby'          => 'post_date',

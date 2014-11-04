@@ -99,7 +99,10 @@
 
                     <hr/>
 
-                    <div class="clearfix text-center"><button class="btn btn-info">Ler outra cartinha</button></div>
+                    <div class="clearfix text-center">
+                        <a href="<?php echo get_next_cartinha()->guid; ?>"
+                            class="btn btn-info"><span>Ler outra cartinha</span>
+                        </a></div>
                     <hr/>
 
                     <div class="clearfix text-center">

@@ -130,10 +130,13 @@ jQuery(function()
                     .click(updateStorage)
                     .val(donation);
 
+                var $a = $('<a>').attr('href', '/cartinha/' + code ).text(' (' + code + ')')
+
                 var $li = $('<li>')
                         .append($rmbtn)
                         .append('<span>&nbsp;</span>')
-                        .append(messages[donation] + '(' + code + ')    ');
+                        .append(messages[donation])
+                        .append($a);
 
                 $list.append($li);
             });
