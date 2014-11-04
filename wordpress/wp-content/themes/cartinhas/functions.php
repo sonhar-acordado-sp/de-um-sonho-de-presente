@@ -3,6 +3,66 @@
 // esconde barra de admin
 add_filter('show_admin_bar', '__return_false');
 
+function create_bcash_transaction_table() {
+    if(get_option('bcash_db')) {
+        return;
+    }
+
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . "bcash_transactions";
+    $charset_collate = '';
+
+    if ( ! empty( $wpdb->charset ) ) {
+      $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
+    }
+
+    if ( ! empty( $wpdb->collate ) ) {
+      $charset_collate .= " COLLATE {$wpdb->collate}";
+    }
+
+    $query = "
+    CREATE TABLE IF NOT EXISTS $table_name (
+      `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `id_pedido` mediumint(9) DEFAULT 0 NOT NULL,
+      `id_transacao` mediumint(9) DEFAULT 0 NOT NULL,
+      `cliente_cep` char(16) DEFAULT '' NOT NULL,
+      `cod_status` smallint DEFAULT 0 NOT NULL,
+      `qtde_produtos` mediumint(9) DEFAULT 0 NOT NULL,
+      `status` varchar(128) DEFAULT '' NOT NULL,
+      `tipo_pagamento` varchar(128) DEFAULT '' NOT NULL,
+
+      `valor_loja` DECIMAL(5,2) DEFAULT 0,
+      `valor_original` DECIMAL(5,2) DEFAULT 0,
+      `valor_total` DECIMAL(5,2) DEFAULT 0,
+
+      `produtos_codigos` TEXT DEFAULT '' NOT NULL,
+      `produtos_valores` TEXT DEFAULT '' NOT NULL,
+      `data_credito` CHAR(127) DEFAULT '' NOT NULL,
+      `data_transacao` CHAR(127) DEFAULT '' NOT NULL,
+      `email_vendedor` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_cidade` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_complemento` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_cpf` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_email` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_endereco` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_estado` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_nome` CHAR(127) DEFAULT '' NOT NULL,
+      `cliente_telefone` CHAR(127) DEFAULT '' NOT NULL,
+      `url_post` CHAR(127) DEFAULT '' NOT NULL,
+
+      PRIMARY KEY (`ID`)
+    ) $charset_collate;
+";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $query );
+
+    add_option('bcash_db', 1);
+}
+add_action('init', 'create_bcash_transaction_table');
+
+
 // registra post type
 add_action('init', 'register_cartinha_post_type');
 function register_cartinha_post_type() {
