@@ -59,6 +59,21 @@ jQuery(function()
             .each(loadValues)
             .each(updateTotal);
 
+    window.addEventListener('storage', function(evt) {
+        if(evt.key !== 'cartinhas'
+           || evt.url === document.location.href) {
+            return;
+        }
+
+        items = JSON.parse(evt.newValue);
+        current = items[current_code];
+
+        $buttons.each(markSelected)
+                .each(updateList)
+                .each(loadValues)
+                .each(updateTotal);
+    }, false);
+
     function updateStorage() {
         var str = JSON.stringify(items);
         localStorage.setItem('cartinhas', str);
