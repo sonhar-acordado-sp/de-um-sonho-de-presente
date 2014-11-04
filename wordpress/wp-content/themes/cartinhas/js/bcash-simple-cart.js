@@ -34,11 +34,24 @@ jQuery(function()
     }
 
     // inicializa eventos
-    $('.donation-forms button.donation')
-        .each(loadValues)
-        .click(addDonation)
-        .click(updateList)
-        .click(updateTotal);
+    var $buttons = $('.donation-forms button.donation')
+                    .click(addDonation)
+                    .click(updateList)
+                    .click(updateTotal)
+                    .click(markSelected)
+                    .each(loadValues);
+
+    function markSelected() {
+        $buttons.each(function(i, el) {
+            var donation = $(this).val();
+
+            if(current.donations.indexOf(donation) >= 0) {
+                $(this).removeClass('btn-info').addClass('btn-success');
+            } else {
+                $(this).removeClass('btn-success').addClass('btn-info');
+            }
+        })
+    }
 
     function loadValues() {
         var donation = $(this).val();
@@ -87,6 +100,7 @@ jQuery(function()
                 .click(removeDonation)
                 .click(updateList)
                 .click(updateTotal)
+                .click(markSelected)
                 .val(donation);
 
             var $li = $('<li>')
@@ -97,7 +111,6 @@ jQuery(function()
             $list.append($li);
         });
     }
-
 
     function generateForm(data) {
         var $form = $('<form>');

@@ -52,7 +52,11 @@
                         <button class="btn btn-info pull-right donation btn-AL-<?php the_title(); ?>"
                                 name="<?php the_title(); ?>"
                                 data-value="<?php echo get_option('doacao_alimentacao'); ?>"
-                                value="doacao_alimentacao">Ajudar</button>
+                                value="doacao_alimentacao">
+                                Ajudar
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                                <span class="glyphicon glyphicon-check"></span>
+                        </button>
                       </div>
                     </div>
 
@@ -67,7 +71,11 @@
                         <button class="btn btn-info pull-right donation btn-TR-<?php the_title(); ?>"
                                 name="<?php the_title(); ?>"
                                 data-value="<?php echo get_option('doacao_transporte'); ?>"
-                                value="doacao_transporte">Ajudar</button>
+                                value="doacao_transporte">
+                                Ajudar
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                                <span class="glyphicon glyphicon-check"></span>
+                        </button>
                       </div>
                     </div>
 
@@ -81,7 +89,11 @@
                         <button class="btn btn-info pull-right donation btn-CA-<?php the_title(); ?>"
                                 name="<?php the_title(); ?>"
                                 data-value="<?php echo get_option('doacao_camiseta'); ?>"
-                                value="doacao_camiseta">Ajudar</button>
+                                value="doacao_camiseta">
+                                Ajudar
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                                <span class="glyphicon glyphicon-check"></span>
+                        </button>
                       </div>
                     </div>
 

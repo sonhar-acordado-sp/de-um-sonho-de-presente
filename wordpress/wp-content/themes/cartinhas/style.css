@@ -257,6 +257,14 @@ body > .container {
     padding: 0;
 }
 
+.single .donation.btn-info .glyphicon-check {
+    display: none;
+}
+
+.single .donation.btn-success .glyphicon-unchecked {
+    display: none;
+}
+
 .page-template-default #main {
     padding: 0 13px;
 }
