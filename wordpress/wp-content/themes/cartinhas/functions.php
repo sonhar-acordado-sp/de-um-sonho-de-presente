@@ -322,13 +322,23 @@ function cartinhas_custom_css()
 }
 add_action( 'wp_head', 'cartinhas_custom_css');
 
-function get_signed_bcash_vars(){
+
+/**
+ * BCASH
+ */
+
+function setup_bcash_urls(){
     add_rewrite_rule(
         'api/sign_bcash_form/?$',
         'index.php?api_action=sign',
         'top' );
+
+    add_rewrite_rule(
+        'api/process_donation/?$',
+        'index.php?api_action=process_donation',
+        'top' );
 }
-add_action( 'init', 'get_signed_bcash_vars' );
+add_action( 'init', 'setup_bcash_urls' );
 
 add_action('parse_request', 'generate_bcash_form_data');
 function generate_bcash_form_data ( $wp ) {
@@ -393,6 +403,60 @@ function generate_bcash_form_data ( $wp ) {
 
     die(json_encode($form_parts));
 }
+
+add_action('parse_request', 'process_donation');
+function process_donation ( $wp ) {
+    if( $wp->request !== 'api/process_donation' ) {
+      return;
+    }
+    global $wpdb;
+
+    $METAS = array(
+        'AL' => 'Alimentação',
+        'CA' => 'Camiseta',
+        'TR' => 'Transporte'
+    );
+
+    $valor_loja = intval($_POST['valor_loja']);
+    $valor_original = intval($_POST['valor_original']);
+    $taxa = $valor_loja / $valor_original;
+
+    $query = "SELECT ID FROM wp_posts WHERE post_type='cartinha' AND post_title='%s'";
+
+    $i = 1;
+    while (isset($_POST["produto_codigo_{$i}"])) {
+
+        $donation = $_POST["produto_codigo_{$i}"];
+        $donation = preg_split('/-/', $donation);
+
+        $donation_value = 0;
+
+        if(is_numeric($_POST["produto_valor_{$i}"])) {
+            $donation_value = intval($_POST["produto_valor_{$i}"]);
+        }
+
+        $code = $donation[1];
+        $target = $donation[0];
+        $meta = $METAS[$target];
+
+        $post_id = $wpdb->get_var($wpdb->prepare($query, $code));
+        $current_value = intval(get_post_meta($post_id, $meta, true));
+
+        $final = $current_value + ($donation_value * $taxa);
+        $final = floor($final * 100) / 100;
+
+        update_post_meta($post_id, $meta, $final);
+
+        $i = $i + 1;
+    }
+
+    die();
+}
+
+/**
+ * /BCASH
+ */
+
 
 add_filter('post_limits', 'postsperpage');
 function postsperpage($limits) {
