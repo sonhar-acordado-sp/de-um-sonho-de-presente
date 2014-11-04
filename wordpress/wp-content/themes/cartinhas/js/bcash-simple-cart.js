@@ -2,8 +2,21 @@ jQuery(function()
 {
     var $ = jQuery;
 
+    var $list = $('.donation-forms .bcash-list');
+    var $rmTpl = $('<button class="btn btn-xs btn-danger">').append('<span class="glyphicon glyphicon-remove">');
+    var $total = $('.donation-forms .bcash-total');
+    var $buttons = $('.donation-forms button.donation');
+
     // {'code': {'donations': ['doacao_camiseta']}}
     var items = {};
+
+    try {
+        if(localStorage.getItem('cartinhas')) {
+            items = JSON.parse(localStorage.getItem('cartinhas'));
+        }
+    } catch(e) {
+        console.log(e);
+    }
 
     // {'donations': ['doacao_camiseta']}
     var current;
@@ -34,12 +47,22 @@ jQuery(function()
     }
 
     // inicializa eventos
-    var $buttons = $('.donation-forms button.donation')
-                    .click(addDonation)
-                    .click(updateList)
-                    .click(updateTotal)
-                    .click(markSelected)
-                    .each(loadValues);
+
+    $buttons.click(addDonation)
+            .click(updateList)
+            .click(updateTotal)
+            .click(markSelected)
+            .click(updateStorage);
+
+    $buttons.each(markSelected)
+            .each(updateList)
+            .each(loadValues)
+            .each(updateTotal);
+
+    function updateStorage() {
+        var str = JSON.stringify(items);
+        localStorage.setItem('cartinhas', str);
+    }
 
     function markSelected() {
         $buttons.each(function(i, el) {
@@ -57,10 +80,11 @@ jQuery(function()
         var donation = $(this).val();
         var value = parseInt( $(this).attr('data-value'), 10);
 
-        if(donation) {
+        if(
+           donation) {
             values[donation] = value;
-        }
-    }
+        }};
+
 
     function addDonation() {
         var donation = $(this).val();
@@ -78,38 +102,42 @@ jQuery(function()
         }
     }
 
-    var $total = $('.donation-forms .bcash-total');
     function updateTotal() {
-        total = current.donations.reduce(function(a,b) {
-            return a + values[b];
-        }, 0);
+        total = 0;
+        for(var att in items) {
+            total = items[att].donations.reduce(function(a,b) {
+                return a + values[b];
+            }, total);
+        }
 
         $total.text(total);
     }
 
-    var $RMBTN = $('<button class="btn btn-xs btn-danger">')
-                .append('<span class="glyphicon glyphicon-remove">')
-
-    var $list = $('.donation-forms .bcash-list');
     function updateList() {
         $list.html('');
+        var donations;
 
-        current.donations.forEach(function(donation){
-            var $rmbtn = $RMBTN.clone();
-            $rmbtn
-                .click(removeDonation)
-                .click(updateList)
-                .click(updateTotal)
-                .click(markSelected)
-                .val(donation);
+        for(var code in items) {
+            donations = items[code]['donations'];
 
-            var $li = $('<li>')
-                    .append($rmbtn)
-                    .append('<span>&nbsp;</span>')
-                    .append(messages[donation]);
+            donations.forEach(function(donation){
+                var $rmbtn = $rmTpl.clone();
+                $rmbtn
+                    .click(removeDonation)
+                    .click(updateList)
+                    .click(updateTotal)
+                    .click(markSelected)
+                    .click(updateStorage)
+                    .val(donation);
 
-            $list.append($li);
-        });
+                var $li = $('<li>')
+                        .append($rmbtn)
+                        .append('<span>&nbsp;</span>')
+                        .append(messages[donation] + '(' + code + ')    ');
+
+                $list.append($li);
+            });
+        }
     }
 
     function generateForm(data) {
@@ -131,6 +159,11 @@ jQuery(function()
         $form.submit();
     }
 
+    function emptyStorage($form) {
+        delete localStorage['cartinhas'];
+        return $form;
+    }
+
     var $conclude = $('.donation-forms .bcash-conclude')
                     .click(concludeDonation);
     function concludeDonation() {
@@ -142,8 +175,8 @@ jQuery(function()
                 method: 'POST'
             })
             .then(generateForm)
+            .then(emptyStorage)
             .then(submitForm);
         }
     }
-
 });

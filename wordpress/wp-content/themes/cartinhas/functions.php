@@ -340,7 +340,7 @@ function generate_bcash_form_data ( $wp ) {
         'doacao_camiseta' => 'camiseta'
     );
 
-    $msg = "Doação para %s da Festa de Natal.";
+    $msg = "Doação para %s da Festa de Natal (%s).";
 
     $counter = 1;
     $form_parts = [];
@@ -364,7 +364,7 @@ function generate_bcash_form_data ( $wp ) {
 
             $valor = sprintf('%0.2f', $valor);
             $form_parts["produto_codigo_{$counter}"] = "{$type}-{$code}";
-            $form_parts["produto_descricao_{$counter}"] = sprintf($msg, $msgs[$don]);
+            $form_parts["produto_descricao_{$counter}"] = sprintf($msg, $msgs[$don], $code);
             $form_parts["produto_qtde_{$counter}"] = 1;
             $form_parts["produto_valor_{$counter}"] = $valor;
 
