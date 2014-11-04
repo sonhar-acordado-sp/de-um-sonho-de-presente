@@ -66,6 +66,11 @@ jQuery(function()
         }
 
         items = JSON.parse(evt.newValue);
+        if(!items) {
+            items = {};
+            items[current_code] = {'donations': []};
+        }
+
         current = items[current_code];
 
         $buttons.each(markSelected)
