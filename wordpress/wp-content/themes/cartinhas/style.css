@@ -281,3 +281,7 @@ body > .container {
     position: absolute;
     right: 30 em;
 }
+
+body > .container > footer {
+    background-color: white;
+}
