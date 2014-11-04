@@ -1,121 +1,136 @@
-jQuery(function(){
-    var db = window.localStorage;
+jQuery(function()
+{
+    var $ = jQuery;
 
-    // {'item': {'val': 10, 'len': 5, 'desc': ''}}
-    var donations = {};
+    // {'code': {'donations': ['doacao_camiseta']}}
+    var items = {};
 
-    function add_item() {
-        var item = jQuery(this).attr('bcash-item');
-        var val = jQuery(this).attr('bcash-value');
-        var desc = jQuery(this).attr('bcash-desc');
+    // {'donations': ['doacao_camiseta']}
+    var current;
 
-        if(!donations[item]) {
-            donations[item] = {
-                'val': parseInt(val, 10),
-                'desc': desc
-            }
+    var total = 0;
+    var values = {
+        'doacao_alimentacao': null,
+        'doacao_transporte': null,
+        'doacao_camiseta': null
+    };
+
+    var messages = {
+        'doacao_alimentacao': 'Doação para alimentação',
+        'doacao_transporte': 'Doação para transporte',
+        'doacao_camiseta': 'Doação para camiseta'
+    };
+
+    // inicializa os items
+    var current_code = $('input[name=codigo-cartinha]').val();
+    if (items[current_code])
+    {
+        current = items[current_code];
+    }
+    else
+    {
+        current = {'donations': [ ]};
+        items[current_code] = current;
+    }
+
+    // inicializa eventos
+    $('.donation-forms button.donation')
+        .each(loadValues)
+        .click(addDonation)
+        .click(updateList)
+        .click(updateTotal);
+
+    function loadValues() {
+        var donation = $(this).val();
+        var value = parseInt( $(this).attr('data-value'), 10);
+
+        if(donation) {
+            values[donation] = value;
         }
-        jQuery(this).removeClass('btn-info');
     }
 
-    function remove_item() {
-        var item = jQuery(this).attr('bcash-item');
-        delete donations[item];
-    }
-
-    function mark_donated() {
-        var item = jQuery(this).attr('bcash-item');
-        if(donations[item]) {
-            jQuery('.btn-'+item).removeClass('btn-info');
-        } else {
-            jQuery('.btn-'+item).addClass('btn-info');
+    function addDonation() {
+        var donation = $(this).val();
+        if(current.donations.indexOf(donation) < 0) {
+            current.donations.push(donation);
         }
     }
 
-    var $list = jQuery('.bcash-list');
-    function update_list() {
+    function removeDonation() {
+        var donation = $(this).val();
+        var index = current.donations.indexOf(donation);
+
+        if(index >= 0) {
+            current.donations.splice(index, 1);
+        }
+    }
+
+    var $total = $('.donation-forms .bcash-total');
+    function updateTotal() {
+        total = current.donations.reduce(function(a,b) {
+            return a + values[b];
+        }, 0);
+
+        $total.text(total);
+    }
+
+    var $RMBTN = $('<button class="btn btn-xs btn-danger">')
+                .append('<span class="glyphicon glyphicon-remove">')
+
+    var $list = $('.donation-forms .bcash-list');
+    function updateList() {
         $list.html('');
 
-        var $item;
-        var $text;
-        var $remove;
-        var $icon;
-        for( var att in donations) {
-            $text = jQuery('<span>').html('&nbsp;' + donations[att].desc + ' ('+att+')');
-            $item = jQuery('<li>');
+        current.donations.forEach(function(donation){
+            var $rmbtn = $RMBTN.clone();
+            $rmbtn
+                .click(removeDonation)
+                .click(updateList)
+                .click(updateTotal)
+                .val(donation);
 
-            $icon = jQuery('<span class="glyphicon glyphicon-remove">');
-            $remove = jQuery('<a class="text-danger">').css('cursor', 'pointer');
+            var $li = $('<li>')
+                    .append($rmbtn)
+                    .append('<span>&nbsp;</span>')
+                    .append(messages[donation]);
 
-            $remove.append($icon);
-            $remove.attr('bcash-item', att);
-
-            $remove.click(remove_item)
-                   .click(mark_donated)
-                   .click(update_list)
-                   .click(update_total);
-
-            $item.append($remove).append($text)
-            $list.append($item);
-        }
+            $list.append($li);
+        });
     }
 
-    var $total = jQuery('.bcash-total');
-    function update_total() {
-        var val = 0;
-        for( var att in donations) {
-            val += donations[att].val;
-        }
 
-        $total.text('R$ ' + val);
-    }
-
-    function conclude_donation() {
-        var $form = generate_bcash_form();
-        $form.submit();
-    }
-    jQuery('.bcash-conclude').click(conclude_donation);
-
-    jQuery('button[bcash-value][bcash-item]')
-        .each(mark_donated)
-        .click(add_item)
-        .click(update_list)
-        .click(update_total);
-
-    function generate_bcash_form() {
-        var $form = jQuery('<form>');
-        $form.attr('action', 'https://www.bcash.com.br/checkout/pay/');
+    function generateForm(data) {
+        var $form = $('<form>');
         $form.attr('method', 'POST');
+        $form.attr('action', 'https://www.bcash.com.br/checkout/pay/');
 
-        jQuery('<input>').attr('name', 'email_loja')
-                         .attr('value', 'fabio.montefuscolo@gmail.com')
-                         .appendTo($form);
-
-        // jQuery('<input>').attr('name', 'url_retorno')
-        //                  .attr('value', '')
-        //                  .appendTo($form);
-
-        var i = 1;
-        for(var att in donations) {
-            jQuery('<input>').attr('name', 'produto_codigo_' + i)
-                             .attr('value', att)
-                             .appendTo($form);
-
-            jQuery('<input>').attr('name', 'produto_descricao_' + i)
-                             .attr('value', donations[att].desc + ' ('+att+')')
-                             .appendTo($form);
-
-            jQuery('<input>').attr('name', 'produto_qtde_' + i)
-                             .attr('value', 1)
-                             .appendTo($form);
-
-            jQuery('<input>').attr('name', 'produto_valor_' + i)
-                             .attr('value', donations[att].val+'.00')
-                             .appendTo($form);
-
-            i++;
+        for(var att in data){
+            $('<input>')
+                .attr('name', att)
+                .attr('type', 'hidden')
+                .val(data[att])
+                .appendTo($form);
         }
-
         return $form;
     }
+
+    function submitForm($form) {
+        $form.submit();
+    }
+
+    var $conclude = $('.donation-forms .bcash-conclude')
+                    .click(concludeDonation);
+    function concludeDonation() {
+        if(total > 0) {
+            jQuery.ajax({
+                url: '/api/sign_bcash_form',
+                data: items,
+                dataType: 'json',
+                method: 'POST'
+            })
+            .then(generateForm)
+            .then(submitForm);
+        }
+    }
+
 });

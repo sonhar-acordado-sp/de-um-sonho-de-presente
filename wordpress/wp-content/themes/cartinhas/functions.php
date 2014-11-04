@@ -159,6 +159,7 @@ function register_cartinhas_settings() {
     register_setting( 'cartinhas_options', 'doacao_camiseta' );
     register_setting( 'cartinhas_options', 'doacao_meta_por_carta' );
     register_setting( 'cartinhas_options', 'email_da_loja' );
+    register_setting( 'cartinhas_options', 'chave_secreta' );
     register_setting( 'cartinhas_options', 'url_retorno_bcash' );
 }
 
@@ -258,6 +259,12 @@ function cartinhas_options() {
                         <td><?php echo get_option('email_da_loja'); ?></td>
                     </tr>
                     <tr>
+                        <td><label for="chave_secreta">Chave secreta:</label></td>
+                        <td><input name="chave_secreta" id="chave_secreta" type="text"
+                                   value="<?php echo get_option('chave_secreta'); ?>"/></td>
+                        <td><?php echo get_option('chave_secreta'); ?></td>
+                    </tr>
+                    <tr>
                         <td><label for="url_retorno_bcash">URL de retorno:</label></td>
                         <td><input name="url_retorno_bcash" id="url_retorno_bcash" type="text"
                                    value="<?php echo get_option('url_retorno_bcash'); ?>"/></td>
@@ -306,7 +313,77 @@ function cartinhas_custom_css()
 }
 add_action( 'wp_head', 'cartinhas_custom_css');
 
+function get_signed_bcash_vars(){
+    add_rewrite_rule(
+        'api/sign_bcash_form/?$',
+        'index.php?api_action=sign',
+        'top' );
+}
+add_action( 'init', 'get_signed_bcash_vars' );
 
+add_action('parse_request', 'generate_bcash_form_data');
+function generate_bcash_form_data ( $wp ) {
+    if( $wp->request !== 'api/sign_bcash_form' ) {
+      return;
+    }
+    header("Content-Type: text/plain");
+
+    $types = array(
+        'doacao_alimentacao' => 'AL',
+        'doacao_transporte' => 'TR',
+        'doacao_camiseta' => 'CA'
+    );
+
+    $msgs = array(
+        'doacao_alimentacao' => 'alimentação',
+        'doacao_transporte' => 'transporte',
+        'doacao_camiseta' => 'camiseta'
+    );
+
+    $msg = "Doação para %s da Festa de Natal.";
+
+    $counter = 1;
+    $form_parts = [];
+    foreach ($_POST as $code => $value) {
+
+        if(!isset($value['donations'])) {
+            continue;
+        }
+        $donations = $value['donations'];
+
+        foreach ($donations as $don) {
+            if(!isset($types[$don])) {
+                continue;
+            }
+            $type = $types[$don];
+            $valor = intval(get_option($don));
+
+            if(!$type || $valor < 1) {
+                continue;
+            }
+
+            $valor = sprintf('%0.2f', $valor);
+            $form_parts["produto_codigo_{$counter}"] = "{$type}-{$code}";
+            $form_parts["produto_descricao_{$counter}"] = sprintf($msg, $msgs[$don]);
+            $form_parts["produto_qtde_{$counter}"] = 1;
+            $form_parts["produto_valor_{$counter}"] = $valor;
+
+            $counter += 1;
+        }
+    }
+
+    $form_parts['email_loja'] = get_option('email_da_loja');
+    $form_parts['url_retorno'] = get_option('url_retorno_bcash');
+
+    ksort($form_parts);
+
+    $url = http_build_query($form_parts);
+    $hash = md5($url . get_option('chave_secreta'));
+
+    $form_parts['hash'] = $hash;
+
+    die(json_encode($form_parts));
+}
 /*
  * Funções do nosso negócio
  */

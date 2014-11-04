@@ -24,6 +24,7 @@
 
                 <div class="col-sm-4 donation-forms" role="main">
                     <h3 class="text-center">Total desta cartinha</h3>
+                    <input type="hidden" name="codigo-cartinha" value="<?php the_title(); ?>" />
                     <div class="clearfix">
                         <div class="col-sm-11">
                             <div class="progress">
@@ -48,10 +49,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Alimentação para o dia</h4>
                         <span>R$ <?php echo get_option('doacao_alimentacao'); ?></span>
-                        <button class="btn btn-info pull-right btn-AL-<?php the_title(); ?>"
-                                bcash-value="<?php echo get_option('doacao_alimentacao'); ?>"
-                                bcash-item="AL-<?php the_title(); ?>"
-                                bcash-desc="Doação para alimentação da festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right donation btn-AL-<?php the_title(); ?>"
+                                name="<?php the_title(); ?>"
+                                data-value="<?php echo get_option('doacao_alimentacao'); ?>"
+                                value="doacao_alimentacao">Ajudar</button>
                       </div>
                     </div>
 
@@ -63,10 +64,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Transporte até o local</h4>
                         <span>R$ <?php echo get_option('doacao_transporte'); ?></span>
-                        <button class="btn btn-info pull-right btn-TR-<?php the_title(); ?>"
-                                bcash-value="<?php echo get_option('doacao_transporte'); ?>"
-                                bcash-item="TR-<?php the_title(); ?>"
-                                bcash-desc="Doação para o transporte na festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right donation btn-TR-<?php the_title(); ?>"
+                                name="<?php the_title(); ?>"
+                                data-value="<?php echo get_option('doacao_transporte'); ?>"
+                                value="doacao_transporte">Ajudar</button>
                       </div>
                     </div>
 
@@ -77,10 +78,10 @@
                       <div class="col-sm-9 pull-right">
                         <h4>Camiseta de identificação</h4>
                         <span>R$ <?php echo get_option('doacao_camiseta'); ?></span>
-                        <button class="btn btn-info pull-right btn-CA-<?php the_title(); ?>"
-                                bcash-value="<?php echo get_option('doacao_camiseta'); ?>"
-                                bcash-item="CA-<?php the_title(); ?>"
-                                bcash-desc="Doação para camiseta na festa de Natal">Ajudar</button>
+                        <button class="btn btn-info pull-right donation btn-CA-<?php the_title(); ?>"
+                                name="<?php the_title(); ?>"
+                                data-value="<?php echo get_option('doacao_camiseta'); ?>"
+                                value="doacao_camiseta">Ajudar</button>
                       </div>
                     </div>
 
