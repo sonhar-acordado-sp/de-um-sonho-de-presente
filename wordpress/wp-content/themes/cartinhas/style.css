@@ -260,3 +260,16 @@ body > .container {
 .page-template-default #main {
     padding: 0 13px;
 }
+
+/**
+ * Do Brunão
+ */
+.page .backvoluntario {
+    background-color: rgb(234, 234, 234);
+    position: relative;
+}
+
+.page .backvoluntario .fotovoluntario {
+    position: absolute;
+    right: 30 em;
+}
