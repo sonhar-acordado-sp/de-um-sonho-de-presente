@@ -23,33 +23,14 @@ function create_bcash_transaction_table() {
 
     $query = "
     CREATE TABLE IF NOT EXISTS $table_name (
-      `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-      `id_pedido` mediumint(9) DEFAULT 0 NOT NULL,
-      `id_transacao` mediumint(9) DEFAULT 0 NOT NULL,
-      `cliente_cep` char(16) DEFAULT '' NOT NULL,
-      `cod_status` smallint DEFAULT 0 NOT NULL,
-      `qtde_produtos` mediumint(9) DEFAULT 0 NOT NULL,
-      `status` varchar(128) DEFAULT '' NOT NULL,
-      `tipo_pagamento` varchar(128) DEFAULT '' NOT NULL,
-
+      `ID` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `id_pedido` BIGINT(20) DEFAULT 0 UNIQUE NOT NULL,
+      `id_transacao` BIGINT(20) DEFAULT 0 UNIQUE NOT NULL,
+      `cod_status` SMALLINT DEFAULT 0 NOT NULL,
       `valor_loja` DECIMAL(5,2) DEFAULT 0,
       `valor_original` DECIMAL(5,2) DEFAULT 0,
       `valor_total` DECIMAL(5,2) DEFAULT 0,
-
-      `produtos_codigos` TEXT DEFAULT '' NOT NULL,
-      `produtos_valores` TEXT DEFAULT '' NOT NULL,
-      `data_credito` CHAR(127) DEFAULT '' NOT NULL,
-      `data_transacao` CHAR(127) DEFAULT '' NOT NULL,
-      `email_vendedor` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_cidade` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_complemento` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_cpf` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_email` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_endereco` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_estado` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_nome` CHAR(127) DEFAULT '' NOT NULL,
-      `cliente_telefone` CHAR(127) DEFAULT '' NOT NULL,
-      `url_post` CHAR(127) DEFAULT '' NOT NULL,
+      `request` TEXT DEFAULT '' NOT NULL,
 
       PRIMARY KEY (`ID`)
     ) $charset_collate;
@@ -464,18 +445,60 @@ function generate_bcash_form_data ( $wp ) {
     die(json_encode($form_parts));
 }
 
+
+function register_transaction($data) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . "bcash_transactions";
+    $request = json_encode($data);
+
+    $query = "
+        INSERT INTO $table_name (`id_pedido`, `id_transacao`, `cod_status`,
+                                 `valor_loja`, `valor_original`, `valor_total`,
+                                 `request`)
+            VALUES (%d, %d, %d, %f, %f, %f, %s)
+            ON DUPLICATE KEY UPDATE cod_status=%d, request=%s;
+    ";
+
+    $query = $wpdb->prepare($query,
+                            $data['id_pedido'],
+                            $data['id_transacao'],
+                            $data['cod_status'],
+                            $data['valor_loja'],
+                            $data['valor_original'],
+                            $data['valor_total'],
+                            $request,
+                            $data['cod_status'],
+                            $request);
+
+    return $wpdb->query($query);
+}
+
+function get_transaction_status($id_pedido, $id_transacao) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . "bcash_transactions";
+
+    $query = "SELECT cod_status FROM {$table_name} WHERE id_pedido=%d AND id_transacao=%d;";
+    $query = $wpdb->prepare($query, $id_pedido, $id_transacao);
+    return intval($wpdb->get_var($query));
+}
+
 add_action('parse_request', 'process_donation');
 function process_donation ( $wp ) {
     if( $wp->request !== 'api/process_donation' ) {
       return;
     }
-    global $wpdb;
-
     $METAS = array(
         'AL' => 'Alimentação',
         'CA' => 'Camiseta',
         'TR' => 'Transporte'
     );
+    global $wpdb;
+
+    $new_status = intval($_POST['cod_status']);
+    $current_status = get_transaction_status($_POST['id_pedido'], $_POST['id_transacao']);
+
+    // antes de começar guardar o que foi fornecido
+    register_transaction($_POST);
 
     $valor_loja = intval($_POST['valor_loja']);
     $valor_original = intval($_POST['valor_original']);
@@ -499,19 +522,21 @@ function process_donation ( $wp ) {
         $target = $donation[0];
         $meta = $METAS[$target];
 
-        $post_id = $wpdb->get_var($wpdb->prepare($query, $code));
-        $current_value = intval(get_post_meta($post_id, $meta, true));
-
-        $final = $current_value + ($donation_value * $taxa);
-        $final = floor($final * 100) / 100;
-
-        update_post_meta($post_id, $meta, $final);
+        if($new_status === 1 && $new_status !== $current_status) {
+            $post_id = $wpdb->get_var($wpdb->prepare($query, $code));
+            $current_value = intval(get_post_meta($post_id, $meta, true));
+            $final = $current_value + ($donation_value * $taxa);
+            $final = floor($final * 100) / 100;
+            update_post_meta($post_id, $meta, $final);
+        }
 
         $i = $i + 1;
     }
 
-    die();
+    header('Location: ' . get_option('siteurl'));
+    exit;
 }
+
 
 /**
  * /BCASH
