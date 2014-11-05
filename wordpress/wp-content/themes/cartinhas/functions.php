@@ -368,7 +368,7 @@ add_action( 'wp_head', 'cartinhas_custom_css');
  * BCASH
  */
 
-function setup_bcash_urls(){
+function setup_cartinhas_custom_urls(){
     add_rewrite_rule(
         'api/sign_bcash_form/?$',
         'index.php?api_action=sign',
@@ -378,8 +378,26 @@ function setup_bcash_urls(){
         'api/process_donation/?$',
         'index.php?api_action=process_donation',
         'top' );
+
+    add_rewrite_rule(
+        'ler-uma-cartinha/?$',
+        'index.php?action=ler-uma-cartinha',
+        'top' );
 }
-add_action( 'init', 'setup_bcash_urls' );
+add_action( 'init', 'setup_cartinhas_custom_urls' );
+
+
+
+add_action('parse_request', 'redirect_to_random_cartinha');
+function redirect_to_random_cartinha ( $wp ) {
+    if( $wp->request !== 'ler-uma-cartinha' ) {
+      return;
+    }
+
+    $post = get_next_cartinha();
+    header('Location: ' . $post->guid);
+    exit();
+}
 
 add_action('parse_request', 'generate_bcash_form_data');
 function generate_bcash_form_data ( $wp ) {
