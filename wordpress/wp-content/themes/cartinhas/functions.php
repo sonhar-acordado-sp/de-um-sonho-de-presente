@@ -502,7 +502,7 @@ function process_donation ( $wp ) {
 
     $valor_loja = intval($_POST['valor_loja']);
     $valor_original = intval($_POST['valor_original']);
-    $taxa = $valor_loja / $valor_original;
+    $taxa = 1; // $valor_loja / $valor_original;
 
     $query = "SELECT ID FROM wp_posts WHERE post_type='cartinha' AND post_title='%s'";
 
