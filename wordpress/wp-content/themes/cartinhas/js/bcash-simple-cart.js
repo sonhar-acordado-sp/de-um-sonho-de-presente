@@ -179,6 +179,8 @@ jQuery(function()
     }
 
     function submitForm($form) {
+        $form.addClass('hidden');
+        $form.appendTo(document.body);
         $form.submit();
     }
 
