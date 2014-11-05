@@ -23,7 +23,7 @@
                 </div> <!-- end #main -->
 
                 <div class="col-sm-4 donation-forms" role="main">
-                    <h3 class="text-center">Total desta cartinha</h3>
+                    <h3 class="text-center">Total já doado para essa cartinha</h3>
                     <input type="hidden" name="codigo-cartinha" value="<?php the_title(); ?>" />
                     <div class="clearfix">
                         <div class="col-sm-11">
@@ -43,6 +43,7 @@
                     <hr/>
 
                     <div class="clearfix item">
+                    <span>Ajude a realizar esse sonho. Basta selecionar os itens que você deseja doar e ao final deve clicar em concluir doação.</span>
                       <a class="media-left col-sm-2 pull-left" href="#">
                         <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-38.png" alt="Alimentação"/>
                       </a>
@@ -102,7 +103,9 @@
                     <div class="clearfix text-center">
                         <a href="<?php echo get_next_cartinha()->guid; ?>"
                             class="btn btn-info"><span>Ler outra cartinha</span>
-                        </a></div>
+                            <p class="text-info"><small>Ao clicar em ler outra cartinha você <b>pode continuar contribuindo.</b></small></p>
+                        </a>
+                        </div>
                     <hr/>
 
                     <div class="clearfix text-center">
