@@ -48,7 +48,7 @@ jQuery(function()
 
     // inicializa eventos
 
-    $buttons.click(addDonation)
+    $buttons.click(toggleDonation)
             .click(updateList)
             .click(updateTotal)
             .click(markSelected)
@@ -106,19 +106,27 @@ jQuery(function()
         }};
 
 
-    function addDonation() {
+    function toggleDonation() {
         var donation = $(this).val();
-        if(current.donations.indexOf(donation) < 0) {
+        var index = current.donations.indexOf(donation);
+
+        if(index < 0) {
             current.donations.push(donation);
+        } else {
+            current.donations.splice(index, 1);
         }
     }
 
     function removeDonation() {
         var donation = $(this).val();
-        var index = current.donations.indexOf(donation);
 
-        if(index >= 0) {
-            current.donations.splice(index, 1);
+        for(var att in items) {
+            var item = items[att];
+
+            var index = item.donations.indexOf(donation);
+            if(index >= 0) {
+                item.donations.splice(index, 1);
+            }
         }
     }
 
