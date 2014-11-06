@@ -43,7 +43,7 @@
                     <hr/>
 
                     <div class="clearfix item">
-                    <span>Para ajudar a realizar esse sonho basta selecionar os itens que você deseja doar e ao final clicar em concluir doação.</span>
+                    <p>Para ajudar a realizar esse sonho basta selecionar os itens que você deseja doar e ao final clicar em concluir doação.</p>
                       <a class="media-left col-sm-2 pull-left" href="#">
                         <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-38.png" alt="Alimentação"/>
                       </a>
@@ -103,14 +103,14 @@
                     <div class="clearfix text-center">
                         <a href="<?php echo get_next_cartinha()->guid; ?>"
                             class="btn btn-info"><span>Ler outra cartinha</span>
-                            <p class="text-info"><small>Ao clicar em ler outra cartinha você <b>pode continuar contribuindo.</b></small></p>
                         </a>
+                        <p class="text-info"><small>Ao clicar em ler outra cartinha você<br/><b>pode continuar contribuindo.</b></small></p>
                         </div>
                     <hr/>
 
                     <div class="clearfix text-center">
                         <button class="btn btn-success bcash-conclude">Concluir doação</button>
-                        <p class="text-info"><small>Você será redirecionado ao site<br><b>BCash</b> para concluir a doação.</small></p>
+                        <p class="text-info"><small>Você será redirecionado ao site<br/><b>BCash</b> para concluir a doação.</small></p>
                     </div>
 
                     <hr/>
