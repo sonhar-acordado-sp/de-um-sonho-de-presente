@@ -481,11 +481,16 @@ function generate_bcash_form_data ( $wp ) {
     die(json_encode($form_parts));
 }
 
+function toUtf8(&$v, $k) {
+    $v = utf8_encode($v);
+}
 
 function register_transaction($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "bcash_transactions";
-    $request = json_encode($_REQUEST);
+
+    array_walk_recursive($data, 'toUtf8');
+    $request = json_encode($data);
 
     $query = "
         INSERT INTO $table_name (`id_pedido`, `id_transacao`, `cod_status`,
