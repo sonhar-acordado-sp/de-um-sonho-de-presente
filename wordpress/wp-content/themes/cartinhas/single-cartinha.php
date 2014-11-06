@@ -43,7 +43,7 @@
                     <hr/>
 
                     <div class="clearfix item">
-                    <span>Ajude a realizar esse sonho. Basta selecionar os itens que você deseja doar e ao final deve clicar em concluir doação.</span>
+                    <span>Para ajudar a realizar esse sonho basta selecionar os itens que você deseja doar e ao final clicar em concluir doação.</span>
                       <a class="media-left col-sm-2 pull-left" href="#">
                         <img width="60" height="60" src="/wp-content/themes/cartinhas/imgs/free-60-icons-38.png" alt="Alimentação"/>
                       </a>
