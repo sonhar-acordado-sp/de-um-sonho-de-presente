@@ -603,8 +603,8 @@ function get_next_cartinha() {
 
 function list_cartinhas() {
     $args = array(
-        'orderby'          => 'post_date',
-        'order'            => 'RAND',
+        'orderby'          => 'rand',
+        'order'            => 'DESC',
         'post_type'        => 'cartinha',
         'post_status'      => 'publish'
     );
