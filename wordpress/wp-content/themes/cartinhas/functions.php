@@ -76,6 +76,15 @@ function enqueue_child_theme_styles() {
     }
 }
 
+add_action('pre_get_posts', 'change_cartinhas_archive_query');
+function change_cartinhas_archive_query($query) {
+    if ($query->is_post_type_archive('cartinha') && $query->is_main_query()) {
+        $query->set('posts_per_page', -1);
+        // $query->set('orderby', 'meta_value_num');
+        // $query->set('meta_key', 'xis');
+        // $query->set('order', 'ASC');
+    }
+}
 
 // remove the standard shortcode
 remove_shortcode('gallery', 'gallery_shortcode');
@@ -639,4 +648,19 @@ function calculate_achieved_for_cartinha($id=null) {
     $total +=  intval(get_post_meta($id, 'Camiseta', true));
 
     return $total;
+}
+
+function get_background_color_for_cartinha($id) {
+    $s = intval(get_post_meta($id, 'Alimentação', true))
+       + intval(get_post_meta($id, 'Transporte', true))
+       + intval(get_post_meta($id, 'Camiseta', true));
+
+    $m = intval(get_option('doacao_meta_por_carta'));
+
+    if($s >= $m) {
+        return '#FFFFD5';
+    }else if($s > 0) {
+        return '#DFFFD5';
+    }
+    return 'transparent';
 }
