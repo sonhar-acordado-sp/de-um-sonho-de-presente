@@ -523,17 +523,45 @@ function get_transaction_status($id_pedido, $id_transacao) {
     return intval($wpdb->get_var($query));
 }
 
+function die_if_bcash_return_is_invalid($data) {
+    $token = get_option('chave_secreta');
+
+    $post = "transacao={$data['id_transacao']}".
+    "&status={$data['status']}".
+    "&cod_status={$data['cod_status']}".
+    "&valor_original={$data['valor_original']}".
+    "&valor_loja={$data['valor_loja']}".
+    "&token={$token}";
+    $enderecoPost = "https://www.bcash.com.br/checkout/verify/";
+
+    ob_start();
+    $ch = curl_init();
+    curl_setopt ($ch, CURLOPT_URL, $enderecoPost);
+    curl_setopt ($ch, CURLOPT_POST, 1);
+    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+    curl_exec ($ch);
+    $resposta = ob_get_contents();
+    ob_end_clean();
+
+    if (trim($resposta) !== "VERIFICADO") {
+        throw new Exception("Error Validating Request", 1);
+    }
+}
+
 add_action('parse_request', 'process_donation');
 function process_donation ( $wp ) {
     if( $wp->request !== 'api/process_donation' ) {
       return;
     }
+
     $METAS = array(
         'AL' => 'Alimentação',
         'CA' => 'Camiseta',
         'TR' => 'Transporte'
     );
     global $wpdb;
+
+    die_if_bcash_return_is_invalid($_POST);
 
     $new_status = intval($_POST['cod_status']);
     $current_status = get_transaction_status($_POST['id_pedido'], $_POST['id_transacao']);
