@@ -658,9 +658,9 @@ function get_background_color_for_cartinha($id) {
     $m = intval(get_option('doacao_meta_por_carta'));
 
     if($s >= $m) {
-        return '#FFFFD5';
-    }else if($s > 0) {
         return '#DFFFD5';
+    }else if($s > 0) {
+        return '#FFFFD5';
     }
     return 'transparent';
 }
