@@ -476,7 +476,7 @@ function generate_bcash_form_data ( $wp ) {
 function register_transaction($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "bcash_transactions";
-    $request = json_encode($data);
+    $request = json_encode($_REQUEST);
 
     $query = "
         INSERT INTO $table_name (`id_pedido`, `id_transacao`, `cod_status`,
