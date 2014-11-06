@@ -214,6 +214,7 @@ function register_cartinhas_settings() {
     register_setting( 'cartinhas_options', 'email_da_loja' );
     register_setting( 'cartinhas_options', 'chave_secreta' );
     register_setting( 'cartinhas_options', 'url_retorno_bcash' );
+    register_setting( 'cartinhas_options', 'url_obrigado_bcash' );
 }
 
 function theme_options() {
@@ -308,20 +309,26 @@ function cartinhas_options() {
                     <tr>
                         <td><label for="email_da_loja">Email da loja:</label></td>
                         <td><input name="email_da_loja" id="email_da_loja" type="email"
-                                   value="<?php echo get_option('email_da_loja'); ?>"/></td>
+                                   value="<?php echo get_option('email_da_loja'); ?>" size="50"/></td>
                         <td><?php echo get_option('email_da_loja'); ?></td>
                     </tr>
                     <tr>
                         <td><label for="chave_secreta">Chave secreta:</label></td>
                         <td><input name="chave_secreta" id="chave_secreta" type="text"
-                                   value="<?php echo get_option('chave_secreta'); ?>"/></td>
+                                   value="<?php echo get_option('chave_secreta'); ?>" size="50"/></td>
                         <td><?php echo get_option('chave_secreta'); ?></td>
                     </tr>
                     <tr>
                         <td><label for="url_retorno_bcash">URL de retorno:</label></td>
                         <td><input name="url_retorno_bcash" id="url_retorno_bcash" type="text"
-                                   value="<?php echo get_option('url_retorno_bcash'); ?>"/></td>
+                                   value="<?php echo get_option('url_retorno_bcash'); ?>" size="50"/></td>
                         <td><?php echo get_option('url_retorno_bcash'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><label for="url_obrigado_bcash">URL da pagina de<br/>agradecimento:</label></td>
+                        <td><input name="url_obrigado_bcash" id="url_obrigado_bcash" type="text"
+                                   value="<?php echo get_option('url_obrigado_bcash'); ?>" size="50"/></td>
+                        <td><?php echo get_option('url_obrigado_bcash'); ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -461,6 +468,8 @@ function generate_bcash_form_data ( $wp ) {
 
     $form_parts['email_loja'] = get_option('email_da_loja');
     $form_parts['url_retorno'] = get_option('url_retorno_bcash');
+    $form_parts['redirect'] = 'true';
+    $form_parts['redirect_time'] = '10';
 
     ksort($form_parts);
 
@@ -558,6 +567,11 @@ function process_donation ( $wp ) {
         }
 
         $i = $i + 1;
+    }
+
+    if(get_option('url_obrigado_bcash')) {
+        header('Location: ' . get_option('url_obrigado_bcash'));
+        exit;
     }
 
     header('Location: ' . get_option('siteurl'));
