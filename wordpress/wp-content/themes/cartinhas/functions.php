@@ -604,7 +604,7 @@ function get_next_cartinha() {
 function list_cartinhas() {
     $args = array(
         'orderby'          => 'post_date',
-        'order'            => 'DESC',
+        'order'            => 'RAND',
         'post_type'        => 'cartinha',
         'post_status'      => 'publish'
     );
