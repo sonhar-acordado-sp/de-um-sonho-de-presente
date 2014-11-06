@@ -5,6 +5,7 @@
                 <div id="main" role="main">
 
                     <div class="page-header"><h1><span>Resultados:</span> <?php echo esc_attr(get_search_query()); ?></h1></div>
+                    <p>Se você não encontrou a cartinha que estava procurando, tente buscá-la novamente utilizando 4 números, como no exemplo: XX<b>0123</b></p>
 
                     <?php if (have_posts()) :?>
 
